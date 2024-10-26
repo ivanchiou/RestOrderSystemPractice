@@ -9,12 +9,12 @@ enum OrderStatus {
 public class Order extends AbstractOrder implements IOrder {
     private LocalDateTime time;
 
-    public Order(int id) {
+    public Order(long id) {
         super(id);
     }
 
     @Override
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
