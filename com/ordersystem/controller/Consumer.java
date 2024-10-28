@@ -19,7 +19,7 @@ public class Consumer implements Runnable {
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                Order order = queue.take();
+                Order order = queue.take(); // blocking
                 processOrder(order);
                 deliveredOrder(order);
                 this.deliveredList.add(order);

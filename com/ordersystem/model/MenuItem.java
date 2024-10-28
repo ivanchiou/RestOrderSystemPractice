@@ -4,11 +4,13 @@ public class MenuItem {
     private String name;
     private double price;
     private String description;
+    private OrderSet set;
 
-    public MenuItem(String name, double price, String description) {
+    public MenuItem(String name, double price, String description, OrderSet set) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.set = set;
     }
 
     public String getName() {
