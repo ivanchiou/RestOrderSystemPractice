@@ -1,0 +1,12 @@
+##############################
+## Java
+##############################
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+*.nar
+.classpath
+.project
+.settings

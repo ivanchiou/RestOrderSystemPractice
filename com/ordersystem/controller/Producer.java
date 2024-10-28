@@ -15,7 +15,7 @@ public class Producer {
         long id = System.currentTimeMillis();
         System.out.println("order id:" + id);
         Order order = new Order(id);
-        queue.offer(order);
+        queue.offer(order); // non-blocking produce
         return order;
     }
 
