@@ -4,7 +4,9 @@ import javax.swing.*;
 import com.ordersystem.controller.Producer;
 import com.ordersystem.controller.Consumer;
 import com.ordersystem.controller.OrderFactory;
+import com.ordersystem.model.MenuItem;
 import com.ordersystem.model.Order;
+import com.ordersystem.model.Food;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,9 +15,25 @@ import java.util.concurrent.BlockingQueue;
 
 public class OrderSystemUI extends JFrame {
     private Thread consumerThread;
+    private final MenuItem[] menuItems = generateMenuItems();
+
+    private MenuItem[] generateMenuItems() {
+        Food[] foods = Food.class.getEnumConstants();
+        MenuItem[] items = new MenuItem[foods.length];
+        for (int i = 0 ; i< foods.length ; i++) {
+            items[i] = new MenuItem(foods[i], "");
+        }
+        // int index = 0;
+        // for (MenuItem item : items) {
+        //     items[index] = new MenuItem(foods[index], "");
+        //     index++;
+        // }
+        return items;
+    }
+
     public OrderSystemUI(Producer producer, Consumer consumer) {
         consumerThread = new Thread((Runnable)consumer);
- 
+
         setSize(800, 600);
         setTitle("點餐系統");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,10 +46,13 @@ public class OrderSystemUI extends JFrame {
         JPanel controlPanel = new JPanel();
         ZButton orderButton = new ZButton("Produce Order");
         ZButton consumeButton = new ZButton("Consume Order");
-
+        JComboBox<MenuItem> itemComboBox = new JComboBox<>(menuItems);
+        
         controlPanel.setBackground(java.awt.Color.GREEN);
+        controlPanel.add(itemComboBox);
         controlPanel.add(orderButton);
         controlPanel.add(consumeButton);
+
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

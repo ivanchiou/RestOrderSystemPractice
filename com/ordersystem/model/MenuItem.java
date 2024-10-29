@@ -1,27 +1,28 @@
 package com.ordersystem.model;
 
 public class MenuItem {
-    private String name;
-    private double price;
+    private Food food;
     private String description;
-    private OrderSet set;
 
-    public MenuItem(String name, double price, String description, OrderSet set) {
-        this.name = name;
-        this.price = price;
+    public MenuItem(Food food, String description) {
+        this.food = food;
         this.description = description;
-        this.set = set;
     }
 
     public String getName() {
-        return this.name;
+        return this.food.getName();
     }
 
     public double getPrice() {
-        return this.price;
+        return this.food.getPrice();
     }
 
     public String getDescription() {
         return this.description;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s-%.1f", getName(), getPrice());
     }
 }
