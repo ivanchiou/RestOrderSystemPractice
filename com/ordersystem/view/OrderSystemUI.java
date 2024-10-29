@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
+import java.util.Collection;
 import java.util.ArrayList;
 
 public class OrderSystemUI extends JFrame {
@@ -34,7 +35,7 @@ public class OrderSystemUI extends JFrame {
     public OrderSystemUI(Producer producer, Consumer consumer) {
         consumerThread = new Thread((Runnable)consumer);
 
-        Food[] foods = Food.class.getEnumConstants();
+        Food[] foods = Food.class.getEnumConstants(); 
         for(Food food : foods) {
             menuItems.add(new MenuItem(food, ""));
         }
@@ -85,33 +86,9 @@ public class OrderSystemUI extends JFrame {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
                     BlockingQueue<Order> queue = producer.getQueue();
-                    String printString = "目前後台等待的訂單:[";
-                    int size = queue.size();
-                    int count = 0;
-                    for (Order o : queue) {
-                        printString += o.getId()+ ":" + o.getItems();
-                        if (count < size - 1) {
-                            printString += ",";
-                        }
-                        count++;
-                    }
-                    printString += "]\n";
-
-                    printString += "已經處理的訂單:[";
-                    size = consumer.getDeliveredOrders().size();
-                    count = 0;
-                    for (Order o : consumer.getDeliveredOrders()) {
-                        printString += o.getId()+ ":" + o.getItems() + ":" + o.getOrderStatus();
-                        if (count < size - 1) {
-                            printString += ",";
-                        }
-                        count++;
-                    }
-                    printString += "]\n";
-
+                    String printString = "目前後台等待的訂單:"+concatOrdersToString(queue);
+                    printString += "\n已經處理的訂單:"+concatOrdersToString(consumer.getDeliveredOrders());
                     orderTextArea.setText(printString);
-                    //System.out.println(printString);
-
                     Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
@@ -125,19 +102,19 @@ public class OrderSystemUI extends JFrame {
         add(controlPanel, BorderLayout.SOUTH);
     }
 
-    // private String concatOrdersToString(Order[] orders) {
-    //     String printString = "目前後台等待的訂單:[";
-    //     int size = orders.length;
-    //     int count = 0;
-    //     for (Order o : orders) {
-    //         printString += o.getId()+ ":" + o.getItems();
-    //         if (count < size - 1) {
-    //             printString += ",";
-    //         }
-    //         count++;
-    //     }
-    //     printString += "]\n";
+    private String concatOrdersToString(Collection<Order> orders) {
+        String printString = "[";
+        int size = orders.size();
+        int count = 0;
+        for (Order o : orders) {
+            printString += o.getId()+ ":" + o.getItems();
+            if (count < size - 1) {
+                printString += ",";
+            }
+            count++;
+        }
+        printString += "]";
 
-    //     return printString;
-    // }
+        return printString;
+    }
 }
