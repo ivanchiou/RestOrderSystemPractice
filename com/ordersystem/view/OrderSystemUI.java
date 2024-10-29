@@ -19,15 +19,13 @@ public class OrderSystemUI extends JFrame {
 
     private MenuItem[] generateMenuItems() {
         Food[] foods = Food.class.getEnumConstants();
+
+        // 把所有食物加到MenuItems
         MenuItem[] items = new MenuItem[foods.length];
         for (int i = 0 ; i< foods.length ; i++) {
             items[i] = new MenuItem(foods[i], "");
         }
-        // int index = 0;
-        // for (MenuItem item : items) {
-        //     items[index] = new MenuItem(foods[index], "");
-        //     index++;
-        // }
+
         return items;
     }
 
@@ -56,7 +54,7 @@ public class OrderSystemUI extends JFrame {
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Order order = OrderFactory.createNextOrder();
+                Order order = OrderFactory.createNextOrder((MenuItem)itemComboBox.getSelectedItem());
                 producer.addOrder(order);
                 System.out.println("Order button clicked!" + order.getId()); // 顯示現在訂單的ID
             }
@@ -80,7 +78,7 @@ public class OrderSystemUI extends JFrame {
                     BlockingQueue<Order> queue = producer.getQueue();
                     System.out.print("目前後台訂單:[");
                     for (Order o : queue) {
-                        System.out.print(o.getId()+",");
+                        System.out.print(o.getId()+ ":" + o.getItems() + ",");
                     }
                     System.out.println("]");
                     Thread.sleep(2000);
