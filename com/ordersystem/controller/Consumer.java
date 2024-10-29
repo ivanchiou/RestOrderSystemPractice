@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 import com.ordersystem.model.Order;
+import com.ordersystem.model.OrderStatus;
 
 public class Consumer implements Runnable {
     private BlockingQueue<Order> queue;
@@ -31,10 +32,12 @@ public class Consumer implements Runnable {
     }
 
     private void processOrder(Order order) {
+        order.setOrderStatus(OrderStatus.PROCESSING);
         System.out.println("處裡訂單中..." + order.getId());
     }
 
     private void deliveredOrder(Order order) {
+        order.setOrderStatus(OrderStatus.COMPLETED);
         System.out.println("餐點已送出:" + order.getId());
     }
 

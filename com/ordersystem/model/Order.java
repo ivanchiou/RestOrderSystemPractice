@@ -2,10 +2,6 @@ package com.ordersystem.model;
 import java.util.Map;
 import java.time.LocalDateTime;
 
-enum OrderStatus {
-    PENDING, PROCESSING, COMPLETED
-}
-
 public class Order extends AbstractOrder implements IOrder {
     private LocalDateTime time;
 
@@ -37,6 +33,16 @@ public class Order extends AbstractOrder implements IOrder {
         }
 
         return null;
+    }
+
+    @Override
+    public void setOrderStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public OrderStatus getOrderStatus() {
+        return this.status;
     }
 }
 
