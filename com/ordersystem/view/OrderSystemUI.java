@@ -11,31 +11,26 @@ import com.ordersystem.model.Food;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.BlockingQueue;
 import java.util.List;
 import java.util.Collection;
 import java.util.ArrayList;
+import com.ordersystem.controller.OrderFileManager;
 
 public class OrderSystemUI extends JFrame {
     private Thread consumerThread;
     private final List<MenuItem> menuItems = new ArrayList<>();
-
-    // private MenuItem[] generateMenuItems() {
-    //     Food[] foods = Food.class.getEnumConstants();
-
-    //     // 把所有食物加到MenuItems
-    //     MenuItem[] items = new MenuItem[foods.length];
-    //     for (int i = 0 ; i< foods.length ; i++) {
-    //         items[i] = new MenuItem(foods[i], "");
-    //     }
-
-    //     return items;
-    // }
+    private final OrderFileManager orderFileManager = new OrderFileManager();
 
     public OrderSystemUI(Producer producer, Consumer consumer) {
+        //readOrders()
+
         consumerThread = new Thread((Runnable)consumer);
 
-        Food[] foods = Food.class.getEnumConstants(); 
+        // 把所有的食物放到菜單
+        Food[] foods = Food.values(); 
         for(Food food : foods) {
             menuItems.add(new MenuItem(food, ""));
         }
@@ -96,6 +91,16 @@ public class OrderSystemUI extends JFrame {
             }
         });
         queuemonitor.start();
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Window Close");
+                // saveOrders
+                orderFileManager.saveOrders(consumer.getDeliveredOrders());
+                dispose();
+            }
+        });
 
         add(titlePanel, BorderLayout.NORTH);
         add(new JScrollPane(orderTextArea), BorderLayout.CENTER);
