@@ -44,5 +44,9 @@ public class Order extends AbstractOrder implements IOrder {
     public OrderStatus getOrderStatus() {
         return this.status;
     }
+
+    public LocalDateTime getTime() {
+        return this.time;
+    }
 }
 

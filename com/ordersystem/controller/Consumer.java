@@ -48,4 +48,8 @@ public class Consumer implements Runnable {
     public List<Order> getDeliveredOrders() {
         return this.deliveredList;
     }
+
+    public void addDeliveredOrders(Order order) {
+        this.deliveredList.add(order);
+    }
 }

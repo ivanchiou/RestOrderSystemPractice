@@ -6,6 +6,7 @@ import com.ordersystem.controller.Consumer;
 import com.ordersystem.controller.OrderFactory;
 import com.ordersystem.model.MenuItem;
 import com.ordersystem.model.Order;
+import com.ordersystem.model.OrderStatus;
 import com.ordersystem.model.Food;
 
 import java.awt.BorderLayout;
@@ -26,6 +27,15 @@ public class OrderSystemUI extends JFrame {
 
     public OrderSystemUI(Producer producer, Consumer consumer) {
         //readOrders()
+        List<Order> orders = orderFileManager.readOrders();
+        for(Order order: orders) {
+            if (order.getOrderStatus() == OrderStatus.COMPLETED) {
+                consumer.addDeliveredOrders(order);
+            } else if (order.getOrderStatus() == OrderStatus.PENDING) {
+                producer.addOrder(order);
+            }
+            System.out.println(order.getId()+",");
+        }
 
         consumerThread = new Thread((Runnable)consumer);
 
@@ -97,6 +107,7 @@ public class OrderSystemUI extends JFrame {
             public void windowClosing(WindowEvent e) {
                 System.out.println("Window Close");
                 // saveOrders
+                orderFileManager.saveOrders(producer.getQueue());
                 orderFileManager.saveOrders(consumer.getDeliveredOrders());
                 dispose();
             }

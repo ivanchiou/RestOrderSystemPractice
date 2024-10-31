@@ -1,0 +1,18 @@
+==== Orders Details ====
+Order ID:17303803793111504
+Order Time:null
+Order Status:PENDING
+Menu Items:漢堡-50.0-1
+========================
+==== Orders Details ====
+Order ID:17303803822827880
+Order Time:null
+Order Status:PENDING
+Menu Items:咖啡-40.0-1
+========================
+==== Orders Details ====
+Order ID:17303803787366802
+Order Time:null
+Order Status:COMPLETED
+Menu Items:漢堡-50.0-1
+========================
