@@ -1,24 +1,17 @@
 package com.ordersystem.controller;
-
-import java.util.concurrent.BlockingQueue;
+import com.ordersystem.model.AbstractProducer;
 import com.ordersystem.model.Order;
-import java.util.Random;
+import java.util.concurrent.BlockingQueue;
 
-public class Producer {
-    private BlockingQueue<Order> queue;
+public class Producer extends AbstractProducer {
     private double totalAmount = 0;
-    private final Random random = new Random();
 
     public Producer(BlockingQueue<Order> queue) {
-        this.queue = queue;
+        super(queue);
     }
 
-    public Order addOrder(Order order) {
-        queue.offer(order); // non-blocking produce
-        return order;
-    }
-
-    public BlockingQueue<Order> getQueue() {
-        return this.queue;
+    @Override
+    public double getTotalAmount() {
+        return this.totalAmount;
     }
 }

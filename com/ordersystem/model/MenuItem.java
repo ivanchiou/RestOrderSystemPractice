@@ -1,6 +1,6 @@
 package com.ordersystem.model;
 
-public class MenuItem {
+public class MenuItem implements IMenuItem {
     private Food food;
     private String description;
 
@@ -15,6 +15,10 @@ public class MenuItem {
 
     public double getPrice() {
         return this.food.getPrice();
+    }
+
+    public String getImageFilePath() {
+        return IMAGE_PATH + this.food.getFileName();
     }
 
     public String getDescription() {

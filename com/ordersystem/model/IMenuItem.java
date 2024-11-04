@@ -1,6 +1,6 @@
 package com.ordersystem.model;
 
-public interface IMenuItemImage {
+public interface IMenuItem {
     String IMAGE_PATH = "images/";
     String getImageFilePath();
 }

@@ -1,5 +1,6 @@
 package com.ordersystem.view;
 import javax.swing.*;
+import java.awt.*;
 
 import com.ordersystem.controller.Producer;
 import com.ordersystem.controller.Consumer;
@@ -24,6 +25,7 @@ public class OrderSystemUI extends JFrame {
     private Thread consumerThread;
     private final List<MenuItem> menuItems = new ArrayList<>();
     private final OrderFileManager orderFileManager = new OrderFileManager();
+    private final FoodIconPanel foodIconPanel;
 
     public OrderSystemUI(Producer producer, Consumer consumer) {
         //readOrders()
@@ -66,10 +68,18 @@ public class OrderSystemUI extends JFrame {
         controlPanel.add(orderButton);
         controlPanel.add(consumeButton);
 
+        foodIconPanel = new FoodIconPanel(menuItems.toArray(new MenuItem[0]));
+        JScrollPane scrollIconPanel = new JScrollPane(foodIconPanel);
+        scrollIconPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollIconPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(scrollIconPanel, BorderLayout.WEST);
+
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Order order = OrderFactory.createNextOrder((MenuItem)itemComboBox.getSelectedItem());
+                MenuItem item = (MenuItem)itemComboBox.getSelectedItem();
+                foodIconPanel.updateCount(item, 1);
+                Order order = OrderFactory.createNextOrder(item);
                 producer.addOrder(order); // 把order加到BlockingQueue裡面
                 System.out.println("Order button clicked!" + order.getId()); // 顯示現在訂單的ID
             }

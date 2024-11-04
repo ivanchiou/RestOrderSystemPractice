@@ -48,5 +48,9 @@ public class Order extends AbstractOrder implements IOrder {
     public LocalDateTime getTime() {
         return this.time;
     }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 }
 
