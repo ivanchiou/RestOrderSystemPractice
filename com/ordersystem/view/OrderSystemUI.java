@@ -24,6 +24,7 @@ public class OrderSystemUI extends JFrame {
     private Thread consumerThread;
     private final List<MenuItem> menuItems = new ArrayList<>();
     private final OrderFileManager orderFileManager = new OrderFileManager();
+    private FoodIconPanel foodIconPanel;
 
     public OrderSystemUI(Producer producer, Consumer consumer) {
         //readOrders()
@@ -44,12 +45,16 @@ public class OrderSystemUI extends JFrame {
         for(Food food : foods) {
             menuItems.add(new MenuItem(food, ""));
         }
-
+        
         setSize(800, 600);
         setTitle("點餐系統");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
+        
+        
+        foodIconPanel = new FoodIconPanel(menuItems.toArray(new MenuItem[0]));
+        add(foodIconPanel, BorderLayout.WEST);
+        
         JLabel orderLabel = new JLabel("點餐系統");
         JPanel titlePanel = new JPanel();
         titlePanel.add(orderLabel);
