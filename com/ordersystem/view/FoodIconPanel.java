@@ -18,9 +18,7 @@ public class FoodIconPanel extends JPanel {
     private static final int IMAGE_HEIGHT = 100;  // 設定固定的圖片高度
     private static final int PADDING = 10;        // 圖片之間的間距
     public FoodIconPanel(MenuItem[] items) {
-
-        setPreferredSize(new Dimension(150, PADDING * 6));
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(IMAGE_WIDTH + PADDING * 2, PADDING * 6));
 
         for (MenuItem item: items) {
             try {
@@ -52,28 +50,14 @@ public class FoodIconPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         int x = PADDING;  // 起始X座標
         int y = PADDING;  // 起始Y座標
-        
-        // 計算每行可以放置的圖片數量
-        int panelWidth = getWidth();
-        int imagesPerRow = (panelWidth - PADDING) / (IMAGE_WIDTH + PADDING);
-        if (imagesPerRow < 1) imagesPerRow = 1;
-        
-        int count = 0;
         for (Map.Entry<MenuItem, Image> entry: itemsImage.entrySet()) {
             Image img = entry.getValue();
             if (img != null) {
                 // 繪製圖片
                 g2d.drawImage(img, x, y, this);
-
-                // 更新位置
-                x += IMAGE_WIDTH + PADDING;
-                count++;
                 
-                // 如果達到每行的最大數量，換行
-                if (count % imagesPerRow == 0) {
-                    x = PADDING;
-                    y += IMAGE_HEIGHT + PADDING + 20; // 20是文字的空間
-                }
+                // 每一個food增加的y的距離
+                y += IMAGE_HEIGHT + PADDING;
             }
         }
     }
