@@ -77,9 +77,15 @@ public class OrderFileManager {
             Order newOrder = null;
             while((line = reader.readLine()) != null) {
                 if (line.startsWith("Order ID:")) {
-                    long orderId = Long.parseLong(line.substring("Order ID:".length()).trim());
-                    newOrder = new Order(orderId);
-                    orders.add(newOrder);
+                    String orderIdString = line.substring("Order ID:".length()).trim();
+                    if (!OrderValidator.isValidOrderId(orderIdString)) {
+                        throw new IllegalArgumentException("Invalid order id: " + orderIdString);
+                    } else {
+                        System.out.println("Order ID: " + orderIdString + " is valid.");
+                        long orderId = Long.parseLong(orderIdString);
+                        newOrder = new Order(orderId);
+                        orders.add(newOrder);
+                    }
                 } else if (line.startsWith("Order Status:")) {
                     newOrder.setOrderStatus(OrderStatus.valueOf(line.substring("Order Status:".length()).trim()));
                 } else if (line.startsWith("Order Time:")) {
@@ -96,8 +102,14 @@ public class OrderFileManager {
                         String itemName = parts[0].trim();
                         Food[] foods = Food.values();
                         Food itemFood = null;
-                        for(Food food : foods) {
-                            if (food.getName().equals(itemName)) {
+                        for (Food food : foods) {
+                            if (!OrderValidator.isValidPrice(parts[1])) {
+                                throw new IllegalArgumentException("Invalid price: " + parts[1]);
+                            }
+                            else if (!OrderValidator.isValidQuantity(parts[2])) {
+                                throw new IllegalArgumentException("Invalid quantity: " + parts[2]);
+                            }
+                            else if (food.getName().equals(itemName)) {
                                 itemFood = food;
                                 break;
                             }
