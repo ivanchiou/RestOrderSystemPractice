@@ -11,3 +11,10 @@
 .classpath
 .project
 .settings
+
+##############################
+## Backup files
+##############################
+*~.nib
+*.tar.gz
+*.swp
