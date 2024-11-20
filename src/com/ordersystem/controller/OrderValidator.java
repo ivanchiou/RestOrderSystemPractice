@@ -18,16 +18,25 @@ public class OrderValidator {
     
     // 驗證訂單ID格式
     public static boolean isValidOrderId(String orderId) {
+        if (orderId == null) {
+            return false;
+        }
         return ORDER_ID_PATTERN.matcher(orderId).matches();
     }
 
     // 驗證價格格式
     public static boolean isValidPrice(String price) {
+        if (price == null) {
+            return false;
+        }
         return PRICE_PATTERN.matcher(price).matches();
     }
 
     // 驗證數量格式
     public static boolean isValidQuantity(String quantity) {
+        if (quantity == null) {
+            return false;
+        }
         return QUANTITY_PATTERN.matcher(quantity).matches();
     }
 }
