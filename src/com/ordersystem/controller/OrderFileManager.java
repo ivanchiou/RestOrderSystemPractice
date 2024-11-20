@@ -68,6 +68,9 @@ public class OrderFileManager {
         File[] orderFiles = directory.listFiles();
         
         // 把orders檔案依照時間排序，最新的在最前面
+        if (orderFiles.length == 0) {
+            return orders;
+        }
         Arrays.sort(orderFiles, (f1, f2) -> Long.valueOf(f2.lastModified()).compareTo(f1.lastModified()));
         // 並取出最新的order檔案，只讀取最新的
         File orderFile = orderFiles[0];

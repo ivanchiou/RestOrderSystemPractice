@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 class FoodIconPanel extends JPanel {
     private static final int MAX_ICON_SIZE = 90;
@@ -32,13 +33,12 @@ class FoodIconPanel extends JPanel {
     private void loadImage(MenuItem item) {
         try {
             String imagePath = item.getImageFilePath();
-            File imageFile = new File(imagePath);
-            
-            if (!imageFile.exists()) {
+            URL imageUrl = getClass().getResource("/"+imagePath);
+            if (imageUrl == null) {
                 System.err.println("圖片文件不存在: " + imagePath);
                 return;
             }
-            Image originalImg = ImageIO.read(imageFile);
+            Image originalImg =ImageIO.read(imageUrl);
             int originalWidth = originalImg.getWidth(null);
             int originalHeight = originalImg.getHeight(null);
 

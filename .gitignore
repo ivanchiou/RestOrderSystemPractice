@@ -8,6 +8,7 @@
 *.ear
 *.nar
 *.txt
+*.MF
 .classpath
 .project
 .settings
@@ -18,3 +19,4 @@
 *~.nib
 *.tar.gz
 *.swp
+bin/

@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build JAR",
+            "type": "java (buildArtifact)",
+            "mainClass": "Main",
+            "targetPath": "${workspaceFolder}/target/${workspaceFolderBasename}.jar",
+            "elements": [
+                "${workspaceFolder}/target/bin",
+                "${workspaceFolder}/src/images",
+                "${workspaceFolder}/lib"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
